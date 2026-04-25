@@ -1,0 +1,4 @@
+python_version: "3.14"
+
+uv_install_dir: "{{ user_home }}/.local/bin"
+uv_bin_path: "{{ uv_install_dir }}/uv"

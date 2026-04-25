@@ -1,0 +1,13 @@
+- name: Create systemd sleep drop-in directory
+  file:
+    path: /etc/systemd/sleep.conf.d
+    state: directory
+    mode: '0755'
+
+- name: Configure s2idle sleep state to prevent WiFi issues on suspend
+  copy:
+    dest: /etc/systemd/sleep.conf.d/s2idle.conf
+    content: |
+      [Sleep]
+      SuspendState=s2idle
+    mode: '0644'

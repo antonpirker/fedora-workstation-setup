@@ -1,0 +1,55 @@
+- name: Ensure install dir exists
+  file:
+    path: "{{ uv_install_dir }}"
+    state: directory
+    mode: "0755"
+  become: false
+
+- name: Check if uv exists
+  stat:
+    path: "{{ uv_bin_path }}"
+  register: uv_stat
+  become: false
+
+- name: Download uv installer
+  get_url:
+    url: https://astral.sh/uv/install.sh
+    dest: /tmp/uv_install.sh
+    mode: "0755"
+  when: not uv_stat.stat.exists
+
+- name: Install uv
+  command: sh /tmp/uv_install.sh
+  environment:
+    UV_INSTALL_DIR: "{{ uv_install_dir }}"
+  args:
+    creates: "{{ uv_bin_path }}"
+  when: not uv_stat.stat.exists
+  become: false
+
+- name: Install ruff via uv
+  command: "{{ uv_bin_path }} tool install ruff"
+  args:
+    creates: "{{ user_home }}/.local/bin/ruff"
+  become: false
+
+- name: Check if Python version is already installed
+  find:
+    paths: "{{ user_home }}/.local/share/uv/python"
+    patterns: "cpython-{{ python_version }}*"
+    file_type: directory
+  register: python_installed
+  become: false
+
+- name: Install specific Python version
+  command: "{{ uv_bin_path }} python install {{ python_version }}"
+  become: false
+  when: python_installed.matched == 0
+
+- name: Ensure ~/.local/bin is in PATH
+  lineinfile:
+    path: "{{ user_home }}/.bashrc"
+    line: 'export PATH="$HOME/.local/bin:$PATH"'
+    state: present
+  become: false
+ 

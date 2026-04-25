@@ -1,0 +1,28 @@
+- name: Install fnm
+  shell: curl -fsSL https://fnm.vercel.app/install | bash
+  args:
+    creates: "{{ user_home }}/.local/share/fnm/fnm"
+  become: false
+
+- name: Ensure fnm bin in PATH in .bashrc
+  lineinfile:
+    path: "{{ user_home }}/.bashrc"
+    line: 'export PATH="{{ user_home }}/.local/share/fnm:$PATH"'
+    state: present
+  become: false
+
+- name: Ensure fnm init in .bashrc
+  lineinfile:
+    path: "{{ user_home }}/.bashrc"
+    line: 'eval "$(fnm env --use-on-cd)"'
+    state: present
+  become: false
+
+- name: Install latest LTS Node via fnm
+  shell: |
+    export PATH="{{ user_home }}/.local/share/fnm:$PATH"
+    fnm install --lts
+    fnm default lts-latest
+  args:
+    creates: "{{ user_home }}/.local/share/fnm/node-versions"
+  become: false

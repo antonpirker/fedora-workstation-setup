@@ -1,0 +1,21 @@
+- name: Setup Fedora Workstation
+  hosts: local
+  become: true
+  vars:
+    user_home: "{{ lookup('env', 'HOME') }}"
+    user_name: "{{ lookup('env', 'USER') }}"
+
+  roles:
+    - base
+    - docker
+    - python
+    - node
+    - claude_code
+    - wifi_suspend
+    - graphics
+    - obsidian
+    - sublime_text
+    - kubernetes
+    - browsers
+    - vscode
+    

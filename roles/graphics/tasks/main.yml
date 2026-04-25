@@ -1,0 +1,6 @@
+- name: Install graphics tools
+  dnf:
+    name:
+      - gimp
+      - inkscape
+    state: present

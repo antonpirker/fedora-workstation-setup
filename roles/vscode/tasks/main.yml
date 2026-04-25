@@ -1,0 +1,33 @@
+- name: Import Microsoft GPG key
+  rpm_key:
+    key: https://packages.microsoft.com/keys/microsoft.asc
+    state: present
+
+- name: Add VS Code repository
+  yum_repository:
+    name: vscode
+    description: Visual Studio Code
+    baseurl: https://packages.microsoft.com/yumrepos/vscode
+    gpgcheck: true
+    gpgkey: https://packages.microsoft.com/keys/microsoft.asc
+    enabled: true
+
+- name: Install VS Code
+  dnf:
+    name: code
+    state: latest
+
+- name: Install VS Code extensions
+  command: code --install-extension {{ item }}
+  loop:
+    - eamodio.gitlens
+    - johnpapa.vscode-peacock
+    - anthropic.claude-code
+    - yzhang.markdown-all-in-one
+    - ms-python.python
+    - ms-python.black-formatter
+    - esbenp.prettier-vscode
+    - dbaeumer.vscode-eslint
+  become: true
+  become_user: "{{ user_name }}"
+  changed_when: false

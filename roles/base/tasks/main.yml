@@ -1,0 +1,28 @@
+- name: Install basic packages
+  dnf:
+    name:
+      - git
+      - gh
+      - curl
+      - wget
+      - htop
+      - vim
+      - direnv
+      - keepassxc
+      - pre-commit
+    state: present
+
+- name: Add Flathub remote
+  flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
+  become: true
+
+- name: Install Dropbox
+  flatpak:
+    name: com.dropbox.Client
+    remote: flathub
+    state: present
+  become: false
+

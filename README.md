@@ -5,6 +5,7 @@ Ansible playbook to provision a [Fedora workstation](https://fedoraproject.org/w
 ## Fresh Fedora install
 
 ```bash
+sudo dnf upgrade -y
 sudo dnf install -y git ansible
 ansible-galaxy collection install community.general
 git clone https://github.com/antonpirker/fedora-workstation-setup.git

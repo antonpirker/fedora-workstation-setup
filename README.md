@@ -1,6 +1,6 @@
 # Fedora Workstation Setup
 
-Ansible playbook to provision a Fedora workstation. Runs against localhost.
+Ansible playbook to provision a [Fedora workstation](https://fedoraproject.org/workstation/). Runs against localhost.
 
 ## Usage
 

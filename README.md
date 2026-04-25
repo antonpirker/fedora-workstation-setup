@@ -2,6 +2,16 @@
 
 Ansible playbook to provision a [Fedora workstation](https://fedoraproject.org/workstation/). Runs against localhost.
 
+## Fresh Fedora install
+
+```bash
+sudo dnf install -y git ansible
+ansible-galaxy collection install community.general
+git clone https://github.com/antonpirker/fedora-workstation-setup.git
+cd fedora-workstation-setup
+ansible-playbook -i inventory playbook.yml --ask-become-pass
+```
+
 ## Usage
 
 ```bash

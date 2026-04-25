@@ -1,1 +1,22 @@
-.claude/settings.local.json
+# Claude
+.claude/
+
+# Environment
+.env
+.env.*
+.envrc
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+__MACOSX/
+
+# Editors
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Ansible
+*.retry

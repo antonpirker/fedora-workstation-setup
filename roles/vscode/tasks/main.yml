@@ -44,6 +44,7 @@
         with open(path) as f:
             settings = json.load(f)
     settings['workbench.colorTheme'] = 'One Dark Pro Darker'
+    settings['oneDarkPro.editorTheme'] = 'One Dark Pro Darker'
     with open(path, 'w') as f:
         json.dump(settings, f, indent=2)
     "

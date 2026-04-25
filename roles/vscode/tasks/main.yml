@@ -20,6 +20,7 @@
 - name: Install VS Code extensions
   command: code --install-extension {{ item }}
   loop:
+    - zhuangtongfa.material-theme
     - eamodio.gitlens
     - johnpapa.vscode-peacock
     - anthropic.claude-code
@@ -28,6 +29,24 @@
     - ms-python.black-formatter
     - esbenp.prettier-vscode
     - dbaeumer.vscode-eslint
+  become: true
+  become_user: "{{ user_name }}"
+  changed_when: false
+
+- name: Set VS Code color theme
+  shell: |
+    python3 -c "
+    import json, os
+    path = os.path.expanduser('~/.config/Code/User/settings.json')
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    settings = {}
+    if os.path.exists(path):
+        with open(path) as f:
+            settings = json.load(f)
+    settings['workbench.colorTheme'] = 'One Dark Pro Darker'
+    with open(path, 'w') as f:
+        json.dump(settings, f, indent=2)
+    "
   become: true
   become_user: "{{ user_name }}"
   changed_when: false
